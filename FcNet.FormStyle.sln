@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FcNet.StyleJson", "FcNet.StyleJson\FcNet.StyleJson.csproj", "{59E9296E-2405-43C6-A504-15B389559009}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FcNet.FormStyle.Samples", "FcNet.FormStyle.Samples\FcNet.FormStyle.Samples.csproj", "{C0A0A851-D5CB-4DB0-B545-7D6B43A8233D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FcNet.TabMenu", "FcNet.TabMenu\FcNet.TabMenu.csproj", "{B8E26929-2558-44D2-9512-C41ABD22F26A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59E9296E-2405-43C6-A504-15B389559009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59E9296E-2405-43C6-A504-15B389559009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59E9296E-2405-43C6-A504-15B389559009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59E9296E-2405-43C6-A504-15B389559009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A0A851-D5CB-4DB0-B545-7D6B43A8233D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A0A851-D5CB-4DB0-B545-7D6B43A8233D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A0A851-D5CB-4DB0-B545-7D6B43A8233D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A0A851-D5CB-4DB0-B545-7D6B43A8233D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E26929-2558-44D2-9512-C41ABD22F26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E26929-2558-44D2-9512-C41ABD22F26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E26929-2558-44D2-9512-C41ABD22F26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E26929-2558-44D2-9512-C41ABD22F26A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
