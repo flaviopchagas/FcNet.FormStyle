@@ -65,9 +65,9 @@ namespace FcNet.FormStyleJson
 
         private static void ApplyThemeToControl(Control ctr, string prop, string val)
         {
-            if (ctr.GetType().GetProperty(prop) == null || string.IsNullOrWhiteSpace(val))
+            if ((ctr.GetType().GetProperty(prop) == null || string.IsNullOrWhiteSpace(val)) && !(ctr is Button))
             {
-                if (!(ctr is Button)) return;
+                return;
             }
 
             string[] splitVal = val.Contains(";") ? val.Split(';') : null;
@@ -113,10 +113,7 @@ namespace FcNet.FormStyleJson
                 case "TabActiveMouseOverBackColor":
                     if (ctr is Button)
                     {
-                        if (val == "Transparent")
-                            (ctr as Button).FlatAppearance.MouseOverBackColor = Color.Transparent;
-                        else
-                            (ctr as Button).FlatAppearance.MouseOverBackColor = ColorFromHtml(val);
+                        (ctr as Button).FlatAppearance.MouseOverBackColor = (val == "Transparent" ? Color.Transparent : ColorFromHtml(val));
                     }
                     break;
                 case "MouseDownBackColor":
@@ -124,15 +121,11 @@ namespace FcNet.FormStyleJson
                 case "TabActiveMouseDownBackColor":
                     if (ctr is Button)
                     {
-                        if (val == "Transparent")
-                            (ctr as Button).FlatAppearance.MouseDownBackColor = Color.Transparent;
-                        else
-                            (ctr as Button).FlatAppearance.MouseDownBackColor = ColorFromHtml(val);
+                        (ctr as Button).FlatAppearance.MouseDownBackColor = (val == "Transparent" ? Color.Transparent : ColorFromHtml(val));
                     }
                     break;
-
-
-                default: break;
+                default:
+                    break;
             }
         }
 

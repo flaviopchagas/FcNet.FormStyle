@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace FcNet.TabMenu
@@ -14,91 +13,13 @@ namespace FcNet.TabMenu
             TabItems.CollectionChanged += TabItems_CollectionChanged;
         }
 
-        private ObservableCollection<Button> _tabItems = new ObservableCollection<Button>();
-
-        #region General Config
-
-        [Category("TabMenu"), Description("TabItems"), MergableProperty(false), Bindable(false)]
+        [Browsable(true), CategoryAttribute("Behavior"), DescriptionAttribute("TabItems")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ObservableCollection<Button> TabItems { get { return _tabItems; } }
+        public ObservableCollection<TabItem> TabItems { get; } = new ObservableCollection<TabItem>();
 
-        [Category("TabMenu"), Description("TabSize"), MergableProperty(false), Bindable(false)]
+        [Browsable(true), CategoryAttribute("Appearance"), DescriptionAttribute("TabItemAppearance")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Size TabSize { get; set; } = new Size(75, 50);
-
-        [Category("TabMenu"), Description("TabMargin"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Padding TabMargin { get; set; } = new Padding(3);
-
-        [Category("TabMenu"), Description("TabBorderColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabBorderColor { get; set; } = Color.White;
-
-        [Category("TabMenu"), Description("TabMargin"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public int TabBorderSize { get; set; } = 0;
-
-        [Category("TabMenu"), Description("TabMargin"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public FlatStyle TabFlatStyle { get; set; } = FlatStyle.Flat;
-
-        #endregion
-
-        #region TabBackColor
-
-        [Category("TabApperance"), Description("TabBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabBackColor { get; set; } = Color.Gainsboro;
-
-        [Category("TabApperance"), Description("TabMouseOverBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabMouseOverBackColor { get; set; }
-
-        [Category("TabApperance"), Description("TabMouseDownBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabMouseDownBackColor { get; set; }
-
-        [Category("TabApperance"), Description("TabActiveBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabActiveBackColor { get; set; } = Color.Silver;
-
-        [Category("TabApperance"), Description("TabActiveMouseOverBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabActiveMouseOverBackColor { get; set; }
-
-        [Category("TabApperance"), Description("TabAciveMouseDownBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabAciveMouseDownBackColor { get; set; }
-
-        #endregion
-
-        #region TabForeColor
-
-        [Category("TabApperance"), Description("TabBackColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabForeColor { get; set; }
-
-        [Category("TabApperance"), Description("TabMouseOverForeColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabMouseOverForeColor { get; set; }
-
-        [Category("TabApperance"), Description("TabMouseDownForeColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabMouseDownForeColor { get; set; }
-
-        [Category("TabApperance"), Description("TabActiveForeColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabActiveForeColor { get; set; }
-
-        [Category("TabApperance"), Description("TabActiveMouseOverForeColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabActiveMouseOverForeColor { get; set; }
-
-        [Category("TabApperance"), Description("TabAciveMouseDownForeColor"), MergableProperty(false), Bindable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TabAciveMouseDownForeColor { get; set; }
-
-        #endregion
+        public TabItemAppearance TabItemAppearance { get; } = new TabItemAppearance();
 
         protected override void OnControlRemoved(ControlEventArgs e)
         {
@@ -106,7 +27,7 @@ namespace FcNet.TabMenu
             try
             {
                 base.OnControlRemoved(e);
-                TabItems.Remove((Button)e.Control);
+                TabItems.Remove((TabItem)e.Control);
             }
             catch (Exception) { }
             finally { TabItems.CollectionChanged += TabItems_CollectionChanged; }
@@ -115,20 +36,14 @@ namespace FcNet.TabMenu
         protected override void OnControlAdded(ControlEventArgs e)
         {
             TabItems.CollectionChanged -= TabItems_CollectionChanged;
+
             try
             {
                 base.OnControlAdded(e);
-
-                Button btn = (Button)e.Control;
+                TabItem btn = (TabItem)e.Control;
                 btn.Click += Tab_Click;
 
-                btn.BackColor = TabBackColor;
-                btn.ForeColor = TabForeColor;
-
-                btn.FlatAppearance.BorderColor = TabBorderColor;
-                btn.FlatAppearance.BorderSize = TabBorderSize;
-
-                TabItems.Add((Button)e.Control);
+                TabItems.Add(btn);
             }
             catch (Exception)
             {
@@ -143,21 +58,9 @@ namespace FcNet.TabMenu
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    Button btn = (Button)e.NewItems[0];
+                    TabItem btn = (TabItem)e.NewItems[0];
                     btn.Click += Tab_Click;
-
-                    btn.FlatStyle = TabFlatStyle;
-
-                    btn.BackColor = TabBackColor;
-                    btn.ForeColor = TabForeColor;
-
-                    btn.FlatAppearance.BorderColor = TabBorderColor;
-                    btn.FlatAppearance.BorderSize = TabBorderSize;
-
-                    btn.Size = TabSize;
-
                     Controls.Add(btn);
-
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Controls.Remove((Control)e.NewItems[0]);
@@ -169,22 +72,21 @@ namespace FcNet.TabMenu
 
         private void Tab_Click(object sender, EventArgs e)
         {
-            foreach (Button b in Controls)
+            foreach (TabItem b in Controls)
             {
-                b.FlatAppearance.MouseOverBackColor = TabMouseOverBackColor;
-                b.ForeColor = TabMouseOverForeColor;
-                b.FlatAppearance.MouseDownBackColor = TabMouseDownBackColor;
-                b.BackColor = TabBackColor;
+                b.FlatStyle = TabItemAppearance.FlatStyle;
+                b.BackColor = TabItemAppearance.BackColor;
+                b.ForeColor = TabItemAppearance.ForeColor;
+                b.FlatAppearance.MouseOverBackColor = TabItemAppearance.MouseOverBackColor;
+                b.FlatAppearance.MouseDownBackColor = TabItemAppearance.MouseDownBackColor;
             }
 
-            Button btn = (sender as Button);
-
-            btn.FlatStyle = FlatStyle.Flat;
-
-            btn.BackColor = TabActiveBackColor;
-            btn.FlatAppearance.MouseOverBackColor = TabActiveMouseOverBackColor;
-            btn.ForeColor = TabActiveForeColor;
-            btn.FlatAppearance.BorderSize = TabBorderSize;
+            TabItem btn = (sender as TabItem);
+            btn.FlatStyle = TabItemAppearance.FlatStyle;
+            btn.BackColor = TabItemAppearance.CheckedBackColor;
+            btn.FlatAppearance.MouseOverBackColor = TabItemAppearance.CheckedMouseOverBackColor;
+            btn.ForeColor = TabItemAppearance.CheckedMouseOverForeColor;
+            btn.FlatAppearance.BorderSize = TabItemAppearance.CheckedBorderSize;
         }
     }
 }
