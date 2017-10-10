@@ -8,18 +8,15 @@ namespace FcNet.TabMenu
 {
     public partial class TabMenu : FlowLayoutPanel
     {
-        public TabMenu()
-        {
-            TabItems.CollectionChanged += TabItems_CollectionChanged;
-        }
+        public TabMenu() { TabItems.CollectionChanged += TabItems_CollectionChanged; }
 
-        [Browsable(true), CategoryAttribute("Behavior"), DescriptionAttribute("TabItems")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Browsable(true), Category("TabMenu"), Description("TabItems")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public ObservableCollection<TabItem> TabItems { get; } = new ObservableCollection<TabItem>();
 
-        [Browsable(true), CategoryAttribute("Appearance"), DescriptionAttribute("TabItemAppearance")]
+        [Browsable(true), Category("TabMenu"), Description("TabAppearance"), DefaultValue(typeof(string), "")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public TabItemAppearance TabItemAppearance { get; } = new TabItemAppearance();
+        public TabItemAppearance TabAppearance { get; } = new TabItemAppearance();
 
         protected override void OnControlRemoved(ControlEventArgs e)
         {
@@ -74,19 +71,19 @@ namespace FcNet.TabMenu
         {
             foreach (TabItem b in Controls)
             {
-                b.FlatStyle = TabItemAppearance.FlatStyle;
-                b.BackColor = TabItemAppearance.BackColor;
-                b.ForeColor = TabItemAppearance.ForeColor;
-                b.FlatAppearance.MouseOverBackColor = TabItemAppearance.MouseOverBackColor;
-                b.FlatAppearance.MouseDownBackColor = TabItemAppearance.MouseDownBackColor;
+                b.FlatStyle = TabAppearance.FlatStyle;
+                b.BackColor = TabAppearance.BackColor;
+                b.ForeColor = TabAppearance.ForeColor;
+                b.FlatAppearance.MouseOverBackColor = TabAppearance.MouseOverBackColor;
+                b.FlatAppearance.MouseDownBackColor = TabAppearance.MouseDownBackColor;
             }
 
             TabItem btn = (sender as TabItem);
-            btn.FlatStyle = TabItemAppearance.FlatStyle;
-            btn.BackColor = TabItemAppearance.CheckedBackColor;
-            btn.FlatAppearance.MouseOverBackColor = TabItemAppearance.CheckedMouseOverBackColor;
-            btn.ForeColor = TabItemAppearance.CheckedMouseOverForeColor;
-            btn.FlatAppearance.BorderSize = TabItemAppearance.CheckedBorderSize;
+            btn.FlatStyle = TabAppearance.FlatStyle;
+            btn.BackColor = TabAppearance.CheckedBackColor;
+            btn.FlatAppearance.MouseOverBackColor = TabAppearance.CheckedMouseOverBackColor;
+            btn.ForeColor = TabAppearance.CheckedMouseOverForeColor;
+            btn.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
         }
     }
 }

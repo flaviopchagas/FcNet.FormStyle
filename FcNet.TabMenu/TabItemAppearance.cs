@@ -4,9 +4,15 @@ using System.Windows.Forms;
 
 namespace FcNet.TabMenu
 {
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public class TabItemAppearance
     {
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public override string ToString()
+        {
+            return "";
+        }
+
+        [Browsable(true), DefaultValue(typeof(FlatStyle), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
         public FlatStyle FlatStyle { get; set; }
 
         [Browsable(true), DefaultValue(1), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
