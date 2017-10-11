@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -64,7 +65,81 @@ namespace FcNet.FormStyleJson
             }
         }
 
+        public enum Foo
+        {
+            Foo1,
+            Foo2
+
+        }
+
         private static void ApplyThemeToControl(Control ctr, string prop, string val)
+        {
+            if (string.IsNullOrWhiteSpace(prop) || string.IsNullOrWhiteSpace(val)) return;
+
+            string[] sVal = val.Split(';');
+            string[] sProp = prop.Split('.');
+            PropertyInfo pInfo = ctr.GetType().GetProperty(sProp[0]);
+
+            if (sProp[0] == "FlatAppearance")
+            {
+                var fa = (ctr as Button).FlatAppearance;
+                pInfo = fa.GetType().GetProperty(sProp[1]);
+            }
+            else if (sProp[0] == "TabItemAppearance")
+            {
+
+            }
+
+            if (pInfo == null) return;
+
+            string bTypeName = pInfo.PropertyType.BaseType.Name;
+            string pType = (bTypeName == "Enum" ? bTypeName : pInfo.PropertyType.Name);
+
+            switch (pType)
+            {
+                case "Enum":
+                    pInfo.SetValue(ctr, Enum.Parse(pInfo.PropertyType, val));
+                    break;
+                case "Color":
+                    pInfo.SetValue(ctr, GetColor(val));
+                    break;
+                case "BorderSize":
+                    pInfo.SetValue(ctr, int.Parse(val));
+                    break;
+                case "Font":
+                    ctr.Font = new Font(sVal[0], Utils.GetInt(sVal[1]), (FontStyle)(Utils.GetInt(sVal[2]) | Utils.GetInt(sVal[3])));
+                    break;
+                case "BackgroundImage":
+                    ctr.BackgroundImage = Image.FromFile(val);
+                    break;
+
+
+                //case "BackgroundImageLayout":
+                //    ctr.BackgroundImageLayout = val.ToEnum<ImageLayout>();
+                //    break;
+                //case "BorderStyle":
+                //    if (pInfo != null) pInfo.SetValue(ctr, val.ToEnum<BorderStyle>());
+                //    break;
+                //case "FlatStyle":
+                //    if (pInfo != null) pInfo.SetValue(ctr, val.ToEnum<FlatStyle>());
+                //    break;
+                //case "Dock":
+                //    ctr.Dock = val.ToEnum<DockStyle>();
+                //    break;
+
+
+                case "Size":
+                    ctr.Size = new Size(Utils.GetInt(sVal[0]), Utils.GetInt(sVal[1]));
+                    break;
+                case "Padding":
+                    ctr.Padding = new Padding(Utils.GetInt(sVal[0]), Utils.GetInt(sVal[1]), Utils.GetInt(sVal[2]), Utils.GetInt(sVal[3]));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void ApplyThemeToControl2(Control ctr, string prop, string val)
         {
             PropertyInfo pi = ctr.GetType().GetProperty(prop);
 
@@ -85,37 +160,19 @@ namespace FcNet.FormStyleJson
                     if (ctr is Button) (ctr as Button).FlatAppearance.BorderSize = (val == "" ? 0 : int.Parse(val));
                     break;
                 case "BorderColor":
-                    if (ctr is Button) (ctr as Button).FlatAppearance.BorderColor = GetColor(val);
-                    break;
                 case "MouseOverBackColor":
-                    if (ctr is Button) (ctr as Button).FlatAppearance.MouseOverBackColor = GetColor(val);
-                    break;
                 case "MouseDownBackColor":
-                    if (ctr is Button) (ctr as Button).FlatAppearance.MouseDownBackColor = GetColor(val);
-                    break;
                 case "CheckedBackColor":
-                    if (ctr is Button) (ctr as Button).FlatAppearance.CheckedBackColor = GetColor(val);
+                case "CheckedMouseDownBackColor":
+                case "CheckedMouseOverBackColor":
+                case "CheckedForeColor":
+                case "CheckedMouseOverForeColor":
+                case "CheckedBorderColor":
+                    if (pi != null) pi.SetValue(ctr, GetColor(val));
                     break;
-
-                //case "CheckedMouseDownBackColor":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.MouseDownBackColor = GetColor(val); 
-                //    break;
-                //case "CheckedMouseOverBackColor":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.MouseOverBackColor = GetColor(val);
-                //    break;
-                //case "CheckedForeColor":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.MouseDownBackColor = (val == "Transparent" ? Color.Transparent : ColorFromHtml(val));
-                //    break;
-                //case "CheckedMouseOverForeColor":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.MouseDownBackColor = (val == "Transparent" ? Color.Transparent : ColorFromHtml(val));
-                //    break;
-                //case "CheckedBorderColor":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.MouseDownBackColor = (val == "Transparent" ? Color.Transparent : ColorFromHtml(val));
-                //    break;
-                //case "CheckedBorderSize":
-                //    if (ctr is Button) (ctr as Button).FlatAppearance.BorderSize = (val == "" ? 0 : int.Parse(val));
-                //    break;
-
+                case "CheckedBorderSize":
+                    if (pi != null) pi.SetValue(ctr, int.Parse(val));
+                    break;
                 // End FlatAppearance Properties
 
                 case "BackColor":
