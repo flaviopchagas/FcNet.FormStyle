@@ -30,6 +30,7 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.tabMenu1 = new FcNet.TabMenu.TabMenu();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -51,22 +52,34 @@
             this.tabMenu1.TabAppearance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.tabMenu1.TabIndex = 2;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(316, 93);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "label1";
+            // 
             // FormSample
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(765, 381);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.tabMenu1);
             this.Controls.Add(this.button1);
             this.Name = "FormSample";
             this.Text = "FormStyle Samples";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Button button1;
         private TabMenu.TabMenu tabMenu1;
+        private System.Windows.Forms.Label label1;
     }
 }
 
