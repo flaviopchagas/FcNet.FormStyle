@@ -16,7 +16,7 @@ namespace FcNet.FormStyleJson
         private static JObject _jObject;
         private static IEnumerable<Control> _controls;
 
-        public static void ApplyTheme(Control mainContainer, string themePath = @".\Themes\Default\theme.json")
+        public static void ApplyTheme(Control mainContainer, string themePath = @".\Themes\default.json")
         {
             _themePath = themePath;
             _controls = GetAllControls(mainContainer);
@@ -102,11 +102,11 @@ namespace FcNet.FormStyleJson
                 case "BorderSize":
                     pInfo.SetValue(obj, Int32.Parse(val));
                     break;
-                case "Font":
-                    ctr.Font = new Font(sVal[0], Utils.GetInt(sVal[1]), (FontStyle)(Utils.GetInt(sVal[2]) | Utils.GetInt(sVal[3])));
-                    break;
                 case "BackgroundImage":
                     ctr.BackgroundImage = Image.FromFile(val);
+                    break;
+                case "Font":
+                    ctr.Font = new Font(sVal[0], Utils.GetInt(sVal[1]), (FontStyle)(Utils.GetInt(sVal[2]) | Utils.GetInt(sVal[3])));
                     break;
                 case "Size":
                     ctr.Size = new Size(Utils.GetInt(sVal[0]), Utils.GetInt(sVal[1]));
@@ -114,8 +114,7 @@ namespace FcNet.FormStyleJson
                 case "Padding":
                     ctr.Padding = new Padding(Utils.GetInt(sVal[0]), Utils.GetInt(sVal[1]), Utils.GetInt(sVal[2]), Utils.GetInt(sVal[3]));
                     break;
-                default:
-                    break;
+                default: break;
             }
         }
 

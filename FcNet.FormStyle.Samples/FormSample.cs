@@ -16,7 +16,7 @@ namespace FcNet.FormStyle.Samples
         public FormSample()
         {
             InitializeComponent();
-            ThemeEngine.ApplyTheme(this, @".\Themes\Default\theme.json");
+            ThemeEngine.ApplyTheme(this, @".\Themes\default.json");
         }
 
         private void button1_Click(object sender, EventArgs e)

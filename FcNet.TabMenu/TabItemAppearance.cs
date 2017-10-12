@@ -31,7 +31,7 @@ namespace FcNet.TabMenu
         [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
         public Color MouseDownBackColor { get; set; } = ColorTranslator.FromHtml("#3C8DBC");
 
-        [Browsable(true), DefaultValue(typeof(Color), "Color.DodgerBlue"), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
         public Color MouseOverBackColor { get; set; } = ColorTranslator.FromHtml("#124078");
 
         //Selected
