@@ -65,30 +65,23 @@ namespace FcNet.FormStyleJson
             }
         }
 
-        public enum Foo
-        {
-            Foo1,
-            Foo2
-
-        }
-
         private static void ApplyThemeToControl(Control ctr, string prop, string val)
         {
             if (string.IsNullOrWhiteSpace(prop) || string.IsNullOrWhiteSpace(val)) return;
 
             string[] sVal = val.Split(';');
             string[] sProp = prop.Split('.');
+            string iProp = prop.Contains(".") ? sProp[1] : prop;
+            object obj = ctr;
+
             PropertyInfo pInfo = ctr.GetType().GetProperty(sProp[0]);
 
             if (sProp[0] == "FlatAppearance")
             {
-                var fa = (ctr as Button).FlatAppearance;
-                pInfo = fa.GetType().GetProperty(sProp[1]);
+                obj = (ctr as Button).FlatAppearance;
+                pInfo = obj.GetType().GetProperty(sProp[1]);
             }
-            else if (sProp[0] == "TabItemAppearance")
-            {
-
-            }
+            else if (sProp[0] == "TabItemAppearance") { }
 
             if (pInfo == null) return;
 
@@ -98,13 +91,16 @@ namespace FcNet.FormStyleJson
             switch (pType)
             {
                 case "Enum":
-                    pInfo.SetValue(ctr, Enum.Parse(pInfo.PropertyType, val));
+                    pInfo.SetValue(obj, Enum.Parse(pInfo.PropertyType, val));
                     break;
                 case "Color":
-                    pInfo.SetValue(ctr, GetColor(val));
+                    pInfo.SetValue(obj, GetColor(val));
+                    break;
+                case "Int32":
+                    pInfo.SetValue(obj, Int32.Parse(val));
                     break;
                 case "BorderSize":
-                    pInfo.SetValue(ctr, int.Parse(val));
+                    pInfo.SetValue(obj, Int32.Parse(val));
                     break;
                 case "Font":
                     ctr.Font = new Font(sVal[0], Utils.GetInt(sVal[1]), (FontStyle)(Utils.GetInt(sVal[2]) | Utils.GetInt(sVal[3])));
@@ -112,22 +108,6 @@ namespace FcNet.FormStyleJson
                 case "BackgroundImage":
                     ctr.BackgroundImage = Image.FromFile(val);
                     break;
-
-
-                //case "BackgroundImageLayout":
-                //    ctr.BackgroundImageLayout = val.ToEnum<ImageLayout>();
-                //    break;
-                //case "BorderStyle":
-                //    if (pInfo != null) pInfo.SetValue(ctr, val.ToEnum<BorderStyle>());
-                //    break;
-                //case "FlatStyle":
-                //    if (pInfo != null) pInfo.SetValue(ctr, val.ToEnum<FlatStyle>());
-                //    break;
-                //case "Dock":
-                //    ctr.Dock = val.ToEnum<DockStyle>();
-                //    break;
-
-
                 case "Size":
                     ctr.Size = new Size(Utils.GetInt(sVal[0]), Utils.GetInt(sVal[1]));
                     break;

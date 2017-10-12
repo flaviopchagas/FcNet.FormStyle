@@ -18,5 +18,10 @@ namespace FcNet.FormStyle.Samples
             InitializeComponent();
             ThemeEngine.ApplyTheme(this, @".\Themes\Default\theme.json");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

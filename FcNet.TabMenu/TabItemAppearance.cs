@@ -7,50 +7,50 @@ namespace FcNet.TabMenu
     [TypeConverter(typeof(ExpandableObjectConverter))]
     public class TabItemAppearance
     {
-        public override string ToString()
-        {
-            return "";
-        }
+        public override string ToString() { return ""; }
 
-        [Browsable(true), DefaultValue(typeof(FlatStyle), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public FlatStyle FlatStyle { get; set; }
+        //Default State
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Size TabSize { get; set; } = new Size(75, 33);
 
-        [Browsable(true), DefaultValue(1), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public int BorderSize { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color BackColor { get; set; } = ColorTranslator.FromHtml("#3C8DBC");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color BorderColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color ForeColor { get; set; } = ColorTranslator.FromHtml("#E8ECF1");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color MouseDownBackColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Padding Margin { get; set; } = new Padding(2, 10, 0, 0);
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color MouseOverBackColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public int BorderSize { get; set; } = 0;
 
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color BorderColor { get; set; } = Color.Transparent;
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color CheckedBackColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color MouseDownBackColor { get; set; } = ColorTranslator.FromHtml("#3C8DBC");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color CheckedForeColor { get; set; }
+        [Browsable(true), DefaultValue(typeof(Color), "Color.DodgerBlue"), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color MouseOverBackColor { get; set; } = ColorTranslator.FromHtml("#124078");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color CheckedMouseDownBackColor { get; set; }
+        //Selected
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color CheckedBackColor { get; set; } = ColorTranslator.FromHtml("#F1F1F1");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color CheckedMouseOverBackColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color CheckedForeColor { get; set; } = ColorTranslator.FromHtml("#2B579A");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color CheckedMouseOverForeColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color CheckedMouseDownBackColor { get; set; } = ColorTranslator.FromHtml("#F1F1F1");
 
-        [Browsable(true), DefaultValue(1), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public int CheckedBorderSize { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color CheckedMouseOverBackColor { get; set; } = ColorTranslator.FromHtml("#F1F1F1");
 
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public Color CheckedMouseOverForeColor { get; set; } = ColorTranslator.FromHtml("#2B579A");
 
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color BackColor { get; set; }
-
-        [Browsable(true), DefaultValue(typeof(Color), ""), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
-        public Color ForeColor { get; set; }
+        [Browsable(true), EditorBrowsable(EditorBrowsableState.Always), NotifyParentProperty(true)]
+        public int CheckedBorderSize { get; set; } = 0;
     }
 }

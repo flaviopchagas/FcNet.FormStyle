@@ -2,13 +2,31 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace FcNet.TabMenu
 {
     public partial class TabMenu : FlowLayoutPanel
     {
-        public TabMenu() { TabItems.CollectionChanged += TabItems_CollectionChanged; }
+        public TabMenu()
+        {
+            Size = new Size(319, 41);
+            BackColor = ColorTranslator.FromHtml("#3C8DBC");
+            ForeColor = ColorTranslator.FromHtml("#000000");
+            TabItems.CollectionChanged += TabItems_CollectionChanged;
+
+            for (int i = 0; i < 2; i++)
+                TabItems.Add(new TabItem()
+                {
+                    Name = $"TabItem{i + 1}",
+                    Text = $"TabItem {i + 1}",
+                    Size = TabAppearance.TabSize,
+                    Margin = TabAppearance.Margin,
+                });
+
+            Tab_Click(TabItems[0], null);
+        }
 
         [Browsable(true), Category("TabMenu"), Description("TabItems")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -71,19 +89,19 @@ namespace FcNet.TabMenu
         {
             foreach (TabItem b in Controls)
             {
-                b.FlatStyle = TabAppearance.FlatStyle;
+                b.FlatStyle = FlatStyle.Flat;
                 b.BackColor = TabAppearance.BackColor;
                 b.ForeColor = TabAppearance.ForeColor;
                 b.FlatAppearance.MouseOverBackColor = TabAppearance.MouseOverBackColor;
                 b.FlatAppearance.MouseDownBackColor = TabAppearance.MouseDownBackColor;
+                b.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
             }
 
             TabItem btn = (sender as TabItem);
-            btn.FlatStyle = TabAppearance.FlatStyle;
+            btn.FlatStyle = FlatStyle.Flat;
             btn.BackColor = TabAppearance.CheckedBackColor;
             btn.FlatAppearance.MouseOverBackColor = TabAppearance.CheckedMouseOverBackColor;
             btn.ForeColor = TabAppearance.CheckedMouseOverForeColor;
-            btn.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
         }
     }
 }
