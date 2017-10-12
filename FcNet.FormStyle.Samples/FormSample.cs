@@ -23,5 +23,15 @@ namespace FcNet.FormStyle.Samples
         {
 
         }
+
+        private void FormSample_Load(object sender, EventArgs e)
+        {
+        
+        }
+
+        private void btnCrud_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

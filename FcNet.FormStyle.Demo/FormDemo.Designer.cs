@@ -1,6 +1,6 @@
-﻿namespace FcNet.FormStyle.Samples
+﻿namespace FcNet.FormStyle.Demo
 {
-    partial class FormSample
+    partial class FormDemo
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnCrud = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnCrud
+            // button1
             // 
-            this.btnCrud.Location = new System.Drawing.Point(407, 34);
-            this.btnCrud.Name = "btnCrud";
-            this.btnCrud.Size = new System.Drawing.Size(75, 23);
-            this.btnCrud.TabIndex = 0;
-            this.btnCrud.Text = "CRUD";
-            this.btnCrud.UseVisualStyleBackColor = true;
-            this.btnCrud.Click += new System.EventHandler(this.btnCrud_Click);
+            this.button1.Location = new System.Drawing.Point(694, 12);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Button Demo";
+            this.button1.UseVisualStyleBackColor = true;
             // 
-            // FormSample
+            // FormDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(765, 381);
-            this.Controls.Add(this.btnCrud);
-            this.Name = "FormSample";
-            this.Text = "FormStyle Samples";
+            this.ClientSize = new System.Drawing.Size(808, 358);
+            this.Controls.Add(this.button1);
+            this.Name = "FormDemo";
+            this.Text = "FcNet - FormStyle Demo";
+            this.Load += new System.EventHandler(this.FormDemo_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnCrud;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,0 +1,9 @@
+﻿{
+  "Button": {
+    "BackColor": "#F48024",
+    "ForeColor": "#FFFFFF",
+    "FlatStyle": "Flat",
+    "FlatAppearance.BorderColor": "#000000",
+    "FlatAppearance.BorderSize": "0"
+  }
+}
