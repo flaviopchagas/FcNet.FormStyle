@@ -1,13 +1,25 @@
 ﻿{
   "Button": {
-    "BackColor": "#F48024",
+    "BackColor": "#007ACC",
+    "ForeColor": "#FFFFFF",
+    "FlatStyle": "Flat",
+    "FlatAppearance.BorderColor": "#000000",
+    "FlatAppearance.BorderSize": "0"
+  },
+  "Label": {
+    "BackColor": "#007ACC",
     "ForeColor": "#FFFFFF",
     "FlatStyle": "Flat",
     "FlatAppearance.BorderColor": "#000000",
     "FlatAppearance.BorderSize": "0"
   },
   "Panel": {
-    "BackColor": "#F48024",
+    "BackColor": "#007ACC",
+    "ForeColor": "#FFFFFF",
+    "BorderStyle": "None"
+  },
+  "ListBox": {
+    "BackColor": "#007ACC",
     "ForeColor": "#FFFFFF",
     "BorderStyle": "None"
   },

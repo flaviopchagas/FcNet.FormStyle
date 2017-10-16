@@ -9,6 +9,7 @@ namespace FcNet.FormStyle
 {
     public class DataGrid : Control
     {
+
         public DataGrid()
         {
 
@@ -24,5 +25,11 @@ namespace FcNet.FormStyle
 
         }
 
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            this.ResumeLayout(false);
+
+        }
     }
 }

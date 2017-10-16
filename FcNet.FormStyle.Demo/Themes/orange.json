@@ -6,7 +6,19 @@
     "FlatAppearance.BorderColor": "#000000",
     "FlatAppearance.BorderSize": "0"
   },
+  "Label": {
+    "BackColor": "#F48024",
+    "ForeColor": "#FFFFFF",
+    "FlatStyle": "Flat",
+    "FlatAppearance.BorderColor": "#000000",
+    "FlatAppearance.BorderSize": "0"
+  },
   "Panel": {
+    "BackColor": "#F48024",
+    "ForeColor": "#FFFFFF",
+    "BorderStyle": "None"
+  },
+  "ListBox": {
     "BackColor": "#F48024",
     "ForeColor": "#FFFFFF",
     "BorderStyle": "None"

@@ -1,42 +1,68 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Windows.Forms;
 
 namespace FcNet.FormStyle
 {
-    public partial class TabbedMenu : FlowLayoutPanel
+    [DefaultProperty("TabItems")]
+    public class TabbedMenu : FlowLayoutPanel
     {
+        [Category("TabbedMenu"), Description("TabItems")]
+        [Editor(typeof(ItemsCollectionEditor), typeof(UITypeEditor))]
+        public ObservableCollection<TabItem> TabItems { get; } = new ObservableCollection<TabItem>();
+
+        [Category("TabbedMenu"), Description("TabAppearance")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public TabItemAppearance TabAppearance { get; } = new TabItemAppearance();
+
         public TabbedMenu()
         {
             Controls.Clear();
 
-            Size = new Size(319, 41);
+            Size = new Size(320, 50);
+            Margin = new Padding(0);
+            Padding = new Padding(0);
             BackColor = ColorTranslator.FromHtml("#3C8DBC");
             ForeColor = ColorTranslator.FromHtml("#000000");
+
             TabItems.CollectionChanged += TabItems_CollectionChanged;
 
             for (int i = 0; i < 2; i++)
-                TabItems.Add(new TabItem()
-                {
-                    Name = $"TabItem{i + 1}",
-                    Text = $"TabItem {i + 1}",
-                    Size = TabAppearance.TabSize,
-                    Margin = TabAppearance.Margin,
-                });
+            {
+                CreateButton();
+            }
 
-            Tab_Click(TabItems[0], null);
+            TabItem_Click(TabItems[0], null);
         }
 
-        [Browsable(true), Category("TabMenu"), Description("TabItems")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public ObservableCollection<TabItem> TabItems { get; } = new ObservableCollection<TabItem>();
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+            TabItems.CollectionChanged -= TabItems_CollectionChanged;
 
-        [Browsable(true), Category("TabMenu"), Description("TabAppearance"), DefaultValue(typeof(string), "")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public TabItemAppearance TabAppearance { get; } = new TabItemAppearance();
+            try
+            {
+                base.OnControlAdded(e);
+                TabItem btn = (TabItem)e.Control;
+                btn.Click += TabItem_Click;
+
+                SetDefaultTheme(btn);
+
+                if (!TabItems.Contains(btn))
+                    TabItems.Add(btn);
+            }
+            catch (Exception)
+            {
+                Controls.Remove(e.Control);
+                MessageBox.Show("Invalid control. Only Button is acceptable.");
+            }
+            finally { TabItems.CollectionChanged += TabItems_CollectionChanged; }
+        }
 
         protected override void OnControlRemoved(ControlEventArgs e)
         {
@@ -50,34 +76,16 @@ namespace FcNet.FormStyle
             finally { TabItems.CollectionChanged += TabItems_CollectionChanged; }
         }
 
-        protected override void OnControlAdded(ControlEventArgs e)
-        {
-            TabItems.CollectionChanged -= TabItems_CollectionChanged;
-
-            try
-            {
-                base.OnControlAdded(e);
-                TabItem btn = (TabItem)e.Control;
-                btn.Click += Tab_Click;
-
-                TabItems.Add(btn);
-            }
-            catch (Exception)
-            {
-                Controls.Remove(e.Control);
-                MessageBox.Show("Invalid control. Only Button is acceptable.");
-            }
-            finally { TabItems.CollectionChanged += TabItems_CollectionChanged; }
-        }
-
         private void TabItems_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     TabItem btn = (TabItem)e.NewItems[0];
-                    btn.Click += Tab_Click;
-                    Controls.Add(btn);
+                    btn.Click += TabItem_Click;
+
+                    if (!Controls.Contains(btn))
+                        Controls.Add(btn);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     Controls.Remove((Control)e.NewItems[0]);
@@ -87,21 +95,44 @@ namespace FcNet.FormStyle
             }
         }
 
-        private void Tab_Click(object sender, EventArgs e)
+        private void TabItem_Click(object sender, EventArgs e)
         {
             foreach (TabItem b in Controls)
             {
-                b.FlatStyle = FlatStyle.Flat;
-                b.BackColor = TabAppearance.BackColor;
-                b.ForeColor = TabAppearance.ForeColor;
-                b.FlatAppearance.MouseOverBackColor = TabAppearance.MouseOverBackColor;
-                b.FlatAppearance.MouseDownBackColor = TabAppearance.MouseDownBackColor;
-                b.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
+                SetDefaultTheme(b);
             }
 
             TabItem btn = (sender as TabItem);
+            btn.FlatStyle = FlatStyle.Flat;
             btn.BackColor = TabAppearance.CheckedBackColor;
+            btn.FlatAppearance.MouseOverBackColor = TabAppearance.CheckedBackColor;
             btn.ForeColor = TabAppearance.CheckedForeColor;
+            btn.FlatAppearance.BorderColor = TabAppearance.CheckedBorderColor;
+            btn.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
+        }
+
+        private void CreateButton()
+        {
+            int total = TabItems.Count + 1;
+
+            TabItem tb = new TabItem();
+            tb.Name = $"tabItem{total}";
+            tb.Text = $"tabItem{total}";
+
+            SetDefaultTheme(tb);
+            TabItems.Add(tb);
+        }
+
+        private void SetDefaultTheme(TabItem tb)
+        {
+            tb.FlatStyle = FlatStyle.Flat;
+            tb.BackColor = TabAppearance.BackColor;
+            tb.ForeColor = TabAppearance.ForeColor;
+            tb.FlatAppearance.MouseOverBackColor = TabAppearance.MouseOverBackColor;
+            tb.FlatAppearance.MouseDownBackColor = TabAppearance.MouseDownBackColor;
+            tb.FlatAppearance.BorderSize = TabAppearance.CheckedBorderSize;
+            tb.Size = TabAppearance.TabSize;
+            tb.Margin = TabAppearance.Margin;
         }
     }
 }

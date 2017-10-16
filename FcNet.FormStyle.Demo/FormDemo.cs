@@ -16,12 +16,22 @@ namespace FcNet.FormStyle.Demo
         {
             InitializeComponent();
 
-            JsonStyle.ApplyTheme(this, @".\JsonStyle\default.json");
+            JsonStyle.ApplyTheme(this, @".\Themes\orange.json");
         }
 
         private void FormDemo_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnOrange_Click(object sender, EventArgs e)
+        {
+            JsonStyle.ApplyTheme(this, @".\Themes\orange.json");
+        }
+
+        private void btnBlue_Click(object sender, EventArgs e)
+        {
+            JsonStyle.ApplyTheme(this, @".\Themes\blue.json");
         }
     }
 }

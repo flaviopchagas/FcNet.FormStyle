@@ -1,8 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace FcNet.FormStyle
 {
-    public partial class TabItem : Button
+    public class TabItem : Button
     {
         public TabItem() { }
     }
